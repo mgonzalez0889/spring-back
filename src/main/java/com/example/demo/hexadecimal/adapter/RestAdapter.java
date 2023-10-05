@@ -1,8 +1,9 @@
 package com.example.demo.hexadecimal.adapter;
 
-import com.example.demo.hexadecimal.domain.Clientes;
+import com.example.demo.hexadecimal.domain.Cliente;
 import com.example.demo.hexadecimal.port.ClientApplicationPort;
 
+import com.example.demo.hexadecimal.port.UploadRepositoryPort;
 import org.slf4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -13,8 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -30,19 +31,19 @@ public class RestAdapter {
     @Autowired
     private ClientApplicationPort clientApplicationPort;
 
-    //@Autowired
-    //private UploadRepositoryPort uploadRepositoryPort;
+
+
     private final Logger log = org.slf4j.LoggerFactory.getLogger(RestAdapter.class);
 
     //@RequestMapping(value = "/clients", method = RequestMethod.GET)
     //@ApiResponses({ @ApiResponse(code = 200, message = "Success", response = Cliente.class) })
     @GetMapping("/clients")
-    public List<Clientes> indexAll() {
+    public List<Cliente> indexAll() {
         return clientApplicationPort.findAll();
     }
 
     @GetMapping("/clientes/page/{page}")
-    public Page<Clientes> indexPage(@PathVariable Integer page) {
+    public Page<Cliente> indexPage(@PathVariable Integer page) {
         Pageable pageable = PageRequest.of(page, 4);
         return clientApplicationPort.finAll(pageable);
     }
@@ -50,10 +51,10 @@ public class RestAdapter {
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/clientes/{id}")
     public ResponseEntity<?> showClient(@PathVariable Long id) {
-        Clientes clientes = null;
+        Cliente cliente = null;
         Map<String, Object> response = new HashMap<>();
         try {
-            clientes = clientApplicationPort.findById(id);
+            cliente = clientApplicationPort.findById(id);
 
         }catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar la consulta en base de datos");
@@ -61,19 +62,19 @@ public class RestAdapter {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        if(clientes == null) {
+        if(cliente == null) {
             response.put("mensaje", "El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 
         }
 
-        return  new ResponseEntity<Clientes>(clientes, HttpStatus.OK);
+        return  new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
     }
 
     @Secured({"ROLE_ADMIN"})
     @PostMapping("/clientes")
-    public ResponseEntity<?> createClient(@Valid @RequestBody Clientes clientes, BindingResult result) {
-        Clientes clientesNew = null;
+    public ResponseEntity<?> createClient(@Valid @RequestBody Cliente cliente, BindingResult result) {
+        Cliente clienteNew = null;
 
         Map<String, Object> response = new HashMap<>();
 
@@ -89,14 +90,14 @@ public class RestAdapter {
         }
 
         try {
-            clientesNew = clientApplicationPort.save(clientes);
+            clienteNew = clientApplicationPort.save(cliente);
         }catch(DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.put("mensaje", "El cliente se ha creado con exito");
-        response.put("cliente", clientesNew);
+        response.put("cliente", clienteNew);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 
     }
@@ -107,8 +108,8 @@ public class RestAdapter {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            Clientes clientes = clientApplicationPort.findById(id);
-            String nombreFotoAnterior = clientes.getFoto();
+            Cliente cliente = clientApplicationPort.findById(id);
+            String nombreFotoAnterior = cliente.getFoto();
             //uploadRepositoryPort.eliminar(nombreFotoAnterior);
             clientApplicationPort.delete(id);
         }catch(DataAccessException e) {
@@ -120,6 +121,24 @@ public class RestAdapter {
 
         response.put("mensaje", "El cliente ha sido eliminado");
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @PostMapping("/clientes/upload")
+    public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
+        Map<String, Object> response = new HashMap<>();
+
+        Cliente cliente = clientApplicationPort.findById(id);
+
+        if(!archivo.isEmpty()) {
+            String nombreArchivo = null;
+            try {
+                //nombreArchivo = uploadRepositoryPort.copiar(archivo);
+
+            }
+
+        }
+
     }
 
 

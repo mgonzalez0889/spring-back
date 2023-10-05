@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="clientes")
-public class Cliente implements Serializable {
+public class Clientes implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -57,7 +56,7 @@ public class Cliente implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="region_id")
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private Region region;
+	private Regiones regiones;
 	//@PrePersist	
 	/*public void prePersist() {
 		createAt = new Date();
@@ -65,18 +64,18 @@ public class Cliente implements Serializable {
 	*/
 	@JsonIgnoreProperties(value={"cliente", "hibernateLazyInitializer", "handler"}, allowSetters = true)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.ALL)
-	private List<Factura> facturas;
+	private List<Facturas> facturas;
 	
 	
-	public Cliente() {
+	public Clientes() {
 		this.facturas = new ArrayList<>();
 	}
 
-	public List<Factura> getFacturas() {
+	public List<Facturas> getFacturas() {
 		return facturas;
 	}
 
-	public void setFacturas(List<Factura> facturas) {
+	public void setFacturas(List<Facturas> facturas) {
 		this.facturas = facturas;
 	}
 
@@ -130,12 +129,12 @@ public class Cliente implements Serializable {
 	}
 	
 	
-	public Region getRegion() {
-		return region;
+	public Regiones getRegion() {
+		return regiones;
 	}
 
-	public void setRegion(Region region) {
-		this.region = region;
+	public void setRegion(Regiones regiones) {
+		this.regiones = regiones;
 	}
 
 

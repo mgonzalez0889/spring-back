@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name="facturas")
-public class Facturas implements Serializable {
+public class Factura implements Serializable {
     /**
      *
      */
@@ -37,15 +37,15 @@ public class Facturas implements Serializable {
 
     @JsonIgnoreProperties(value= {"facturas", "hibernateLazyInitializer", "handler"}, allowSetters = true)
     @ManyToOne(fetch=FetchType.LAZY)
-    private Clientes cliente;
+    private Cliente cliente;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="factura_id")
-    private List<ItemsFactura> items;
+    private List<ItemFactura> items;
 
 
-    public Facturas() {
+    public Factura() {
         items = new ArrayList<>();
     }
 
@@ -78,27 +78,27 @@ public class Facturas implements Serializable {
         this.createAt = createAt;
     }
 
-    public Clientes getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Clientes cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
 
 
-    public List<ItemsFactura> getItems() {
+    public List<ItemFactura> getItems() {
         return items;
     }
 
-    public void setItems(List<ItemsFactura> items) {
+    public void setItems(List<ItemFactura> items) {
         this.items = items;
     }
 
     public Double getTotal() {
         Double total = 0.00;
-        for(ItemsFactura item: items) {
+        for(ItemFactura item: items) {
             total += item.getImporte();
         }
         return total;

@@ -1,13 +1,10 @@
 package com.example.demo.hexadecimal.application;
 
-import com.example.demo.hexadecimal.domain.Clientes;
-import com.example.demo.hexadecimal.domain.Facturas;
-import com.example.demo.hexadecimal.domain.Productos;
-import com.example.demo.hexadecimal.domain.Regions;
-import com.example.demo.hexadecimal.port.ClientApplicationPort;
-import com.example.demo.hexadecimal.port.FacturaApplicationPort;
-import com.example.demo.hexadecimal.port.ProductosApplicationPort;
-import com.example.demo.hexadecimal.port.RegionRepositoryPort;
+import com.example.demo.hexadecimal.domain.Cliente;
+import com.example.demo.hexadecimal.domain.Factura;
+import com.example.demo.hexadecimal.domain.Producto;
+import com.example.demo.hexadecimal.domain.Region;
+import com.example.demo.hexadecimal.port.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,27 +25,28 @@ public class ClientApplication implements ClientApplicationPort {
     @Autowired
     private ProductosApplicationPort productosPort;
 
+
     @Override
     @Transactional(readOnly = true)
-    public List<Clientes> findAll() {
+    public List<Cliente> findAll() {
         return region.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Clientes> finAll(Pageable pageable) {
+    public Page<Cliente> finAll(Pageable pageable) {
         return region.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Clientes findById(Long id) {
+    public Cliente findById(Long id) {
         return region.findById(id).orElse(null);
     }
     @Override
     @Transactional(readOnly = false)
-    public Clientes save(Clientes clientes) {
-        return region.save(clientes);
+    public Cliente save(Cliente cliente) {
+        return region.save(cliente);
     }
 
     @Override
@@ -59,18 +57,18 @@ public class ClientApplication implements ClientApplicationPort {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Regions> findAllRegiones() {
+    public List<Region> findAllRegiones() {
         return region.findAllRegiones();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Facturas findFacturaById(Long id) {
+    public Factura findFacturaById(Long id) {
         return facturaPort.findById(id).orElse(null);
     }
 
     @Override
-    public Facturas saveFacturas(Facturas factura) {
+    public Factura saveFacturas(Factura factura) {
         return facturaPort.save(factura);
     }
 
@@ -81,7 +79,7 @@ public class ClientApplication implements ClientApplicationPort {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Productos> findProductosByNombre(String term) {
+    public List<Producto> findProductosByNombre(String term) {
         return productosPort.findByNombreContainingIgnoreCase(term);
     }
 

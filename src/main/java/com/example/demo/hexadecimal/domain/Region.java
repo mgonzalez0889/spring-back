@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="regiones")
-public class Regions implements Serializable {
+public class Region implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

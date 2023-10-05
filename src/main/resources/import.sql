@@ -21,7 +21,7 @@ INSERT INTO regiones (id, nombre) VALUES(8, 'Antartida');
 
 
 /* Populate tabla clientes */
-INSERT INTO clientes (region_id, nombre, apellido, email, create_at) VALUES(1, 'Andrés', 'Guzmán', 'profesor@bolsadeideas.com', '2018-01-01');
+INSERT INTO clientes (region_id, nombre, apellido, email, create_at) VALUES(1, 'Andrï¿½s', 'Guzmï¿½n', 'profesor@bolsadeideas.com', '2018-01-01');
 INSERT INTO clientes (region_id, nombre, apellido, email, create_at) VALUES(2, 'Mr. John', 'Doe', 'john.doe@gmail.com', '2018-01-02');
 INSERT INTO clientes (region_id, nombre, apellido, email, create_at) VALUES(3, 'Rasmus', 'Lerdorf', 'rasmus.lerdorf@gmail.com', '2018-01-04');
 INSERT INTO clientes (region_id, nombre, apellido, email, create_at) VALUES(4, 'Linus', 'Torvalds', 'linus.torvalds@gmail.com', '2018-01-03');

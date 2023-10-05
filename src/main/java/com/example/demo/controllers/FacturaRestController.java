@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.dao.models.services.IClienteService;
-import com.example.demo.models.entity.Factura;
-import com.example.demo.models.entity.Producto;
+import com.example.demo.models.entity.Facturas;
+import com.example.demo.models.entity.Productos;
 
 @CrossOrigin(origins = {"http://localhost:4200","*"})
 @RestController
@@ -30,7 +30,7 @@ public class FacturaRestController {
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping("/facturas/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public Factura show(@PathVariable Long id) {
+	public Facturas show(@PathVariable Long id) {
 		return clienteService.findFacturaById(id);		
 	}
 	
@@ -43,15 +43,15 @@ public class FacturaRestController {
 	
 	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/facturas/filtrar-productos/{term}")
-	public List<Producto> filtrarProductos(@PathVariable String term) {
+	public List<Productos> filtrarProductos(@PathVariable String term) {
 		return clienteService.findProductoByNombre(term);
 	}
 	
 	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/facturas")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Factura crear(@RequestBody Factura factura) {
-		return clienteService.saveFactura(factura);
+	public Facturas crear(@RequestBody Facturas facturas) {
+		return clienteService.saveFactura(facturas);
 	}
 	
 	

@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="productos")
-public class Productos implements Serializable {
+public class Producto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

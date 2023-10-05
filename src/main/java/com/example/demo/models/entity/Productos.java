@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="productos")
-public class Producto implements Serializable{
+public class Productos implements Serializable{
 	
 	/**
 	 * 

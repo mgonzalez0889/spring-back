@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 
 @Entity
 @Table(name="regiones")
-public class Region implements Serializable {
+public class Regiones implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

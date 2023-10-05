@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="facturas_items")
-public class ItemsFactura implements Serializable {
+public class ItemFactura implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +16,11 @@ public class ItemsFactura implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="producto_id")
-    private Productos producto;
+    private Producto producto;
 
-    private Productos getProducto() {return  producto;}
+    private Producto getProducto() {return  producto;}
 
-    public void setProducto(Productos producto) {this.producto = producto;}
+    public void setProducto(Producto producto) {this.producto = producto;}
 
     private Integer cantidad;
 

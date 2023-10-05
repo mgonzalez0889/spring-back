@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.models.dao.IClienteDao;
 import com.example.demo.models.dao.IFacturaDao;
-import com.example.demo.models.entity.Cliente;
-import com.example.demo.models.entity.Factura;
-import com.example.demo.models.entity.Producto;
-import com.example.demo.models.entity.Region;
+import com.example.demo.models.entity.Clientes;
+import com.example.demo.models.entity.Facturas;
+import com.example.demo.models.entity.Productos;
+import com.example.demo.models.entity.Regiones;
 
 @Service
 public class ClienteServiceImpl implements IClienteService{
@@ -28,14 +28,14 @@ public class ClienteServiceImpl implements IClienteService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Cliente> finAll() {
+	public List<Clientes> finAll() {
 		// TODO Auto-generated method stub
-		return (List<Cliente>) clienteDao.findAll();
+		return (List<Clientes>) clienteDao.findAll();
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Page<Cliente> finAll(Pageable pageable) {
+	public Page<Clientes> finAll(Pageable pageable) {
 		// TODO Auto-generated method stub
 		return clienteDao.findAll(pageable);
 	}
@@ -43,7 +43,7 @@ public class ClienteServiceImpl implements IClienteService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Cliente findById(Long id) {
+	public Clientes findById(Long id) {
 		// TODO Auto-generated method stub
 		return clienteDao.findById(id).orElse(null);
 	}
@@ -51,9 +51,9 @@ public class ClienteServiceImpl implements IClienteService{
 	
 	@Override
 	@Transactional(readOnly = false)
-	public Cliente save(Cliente cliente) {
+	public Clientes save(Clientes clientes) {
 		// TODO Auto-generated method stub
-		return clienteDao.save(cliente);
+		return clienteDao.save(clientes);
 	}
 	
 	
@@ -66,23 +66,23 @@ public class ClienteServiceImpl implements IClienteService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Region> findAllRegiones() {
+	public List<Regiones> findAllRegiones() {
 		// TODO Auto-generated method stub
 		return clienteDao.findAllRegiones();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Factura findFacturaById(Long id) {
+	public Facturas findFacturaById(Long id) {
 	
 		return facturaDao.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional
-	public Factura saveFactura(Factura factura) {
+	public Facturas saveFactura(Facturas facturas) {
  
-		return facturaDao.save(factura);
+		return facturaDao.save(facturas);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class ClienteServiceImpl implements IClienteService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Producto> findProductoByNombre(String term) {
+	public List<Productos> findProductoByNombre(String term) {
 
 		return productoDao.findByNombreContainingIgnoreCase(term);
 	}

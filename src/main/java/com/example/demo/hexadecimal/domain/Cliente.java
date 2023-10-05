@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name="clientes")
-public class Clientes implements Serializable {
+public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,7 +44,7 @@ public class Clientes implements Serializable {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="region_id")
     @JsonIgnoreProperties(value= {"hibernateLazyInitializer", "handler"}, allowSetters = true)
-    private Regions regions;
+    private Region region;
     //@PrePersist
 	/*public void prePersist() {
 		createAt = new Date();
@@ -52,18 +52,18 @@ public class Clientes implements Serializable {
 	*/
     @JsonIgnoreProperties(value={"cliente", "hibernateLazyInitializer", "handler"}, allowSetters = true)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<Facturas> facturas;
+    private List<Factura> facturas;
 
 
-    public Clientes() {
+    public Cliente() {
         this.facturas = new ArrayList<>();
     }
 
-    public List<Facturas> getFacturas() {
+    public List<Factura> getFacturas() {
         return facturas;
     }
 
-    public void setFacturas(List<Facturas> facturas) {
+    public void setFacturas(List<Factura> facturas) {
         this.facturas = facturas;
     }
 
@@ -115,12 +115,12 @@ public class Clientes implements Serializable {
         this.foto = foto;
     }
 
-    public Regions getRegion() {
-        return regions;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setRegion(Regions regions) {
-        this.regions = regions;
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
 

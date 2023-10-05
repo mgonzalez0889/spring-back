@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="facturas_items")
-public class ItemFactura implements Serializable {
+public class ItemFacturas implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,16 +24,16 @@ public class ItemFactura implements Serializable {
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="producto_id")
-	private Producto producto;
+	private Productos productos;
 	
 	
-	public Producto getProducto() {
-		return producto;
+	public Productos getProducto() {
+		return productos;
 	}
 
 
-	public void setProducto(Producto producto) {
-		this.producto = producto;
+	public void setProducto(Productos productos) {
+		this.productos = productos;
 	}
 
 
@@ -60,7 +60,7 @@ public class ItemFactura implements Serializable {
 	}
 	
 	public Double getImporte( ) {
-		return cantidad.doubleValue() * producto.getPrecio();
+		return cantidad.doubleValue() * productos.getPrecio();
 	}
 
 

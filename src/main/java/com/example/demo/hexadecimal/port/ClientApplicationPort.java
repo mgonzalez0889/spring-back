@@ -1,9 +1,9 @@
 package com.example.demo.hexadecimal.port;
 
-import com.example.demo.hexadecimal.domain.Clientes;
-import com.example.demo.hexadecimal.domain.Facturas;
-import com.example.demo.hexadecimal.domain.Productos;
-import com.example.demo.hexadecimal.domain.Regions;
+import com.example.demo.hexadecimal.domain.Cliente;
+import com.example.demo.hexadecimal.domain.Factura;
+import com.example.demo.hexadecimal.domain.Producto;
+import com.example.demo.hexadecimal.domain.Region;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,24 +11,24 @@ import java.util.List;
 
 public interface ClientApplicationPort {
 
-    List<Clientes> findAll();
+    List<Cliente> findAll();
 
-    Page<Clientes> finAll(Pageable pageable);
+    Page<Cliente> finAll(Pageable pageable);
 
-    Clientes findById(Long id);
+    Cliente findById(Long id);
 
-    Clientes save(Clientes clientes);
+    Cliente save(Cliente cliente);
 
     void delete(Long id);
 
-    List<Regions> findAllRegiones();
+    List<Region> findAllRegiones();
 
-    Facturas findFacturaById(Long id);
+    Factura findFacturaById(Long id);
 
-    Facturas saveFacturas(Facturas factura);
+    Factura saveFacturas(Factura factura);
 
     void deleteFacturasById(Long id);
 
-    List<Productos> findProductosByNombre(String term);
+    List<Producto> findProductosByNombre(String term);
 
 }

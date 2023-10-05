@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="facturas")
-public class Factura implements Serializable {
+public class Facturas implements Serializable {
 	/**
 	 * 
 	 */
@@ -53,15 +53,15 @@ public class Factura implements Serializable {
 	
 	@JsonIgnoreProperties(value= {"facturas", "hibernateLazyInitializer", "handler"}, allowSetters = true)
 	@ManyToOne(fetch=FetchType.LAZY)	
-	private Cliente cliente;
+	private Clientes clientes;
 	
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="factura_id")
-	private List<ItemFactura> items;
+	private List<ItemFacturas> items;
 	
 	
-	public Factura() {
+	public Facturas() {
 		items = new ArrayList<>();
 	}
 
@@ -94,27 +94,27 @@ public class Factura implements Serializable {
 		this.createAt = createAt;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Clientes getCliente() {
+		return clientes;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setCliente(Clientes clientes) {
+		this.clientes = clientes;
 	}
 	
 	
 	
-	public List<ItemFactura> getItems() {
+	public List<ItemFacturas> getItems() {
 		return items;
 	}
 
-	public void setItems(List<ItemFactura> items) {
+	public void setItems(List<ItemFacturas> items) {
 		this.items = items;
 	}
 	
 	public Double getTotal() {
 		Double total = 0.00;
-		for(ItemFactura item: items) {
+		for(ItemFacturas item: items) {
 			total += item.getImporte();
 		}
 		return total;
