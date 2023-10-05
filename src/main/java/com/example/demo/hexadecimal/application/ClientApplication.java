@@ -17,10 +17,10 @@ import java.util.List;
 public class ClientApplication implements ClientApplicationPort {
 
     @Autowired
-    private RegionRepositoryPort region;
+    private FacturaApplicationPort facturaApplicationPort;
 
     @Autowired
-    private FacturaApplicationPort facturaPort;
+    private RegionRepositoryPort region;
 
     @Autowired
     private ProductosApplicationPort productosPort;
@@ -64,23 +64,22 @@ public class ClientApplication implements ClientApplicationPort {
     @Override
     @Transactional(readOnly = true)
     public Factura findFacturaById(Long id) {
-        return facturaPort.findById(id).orElse(null);
+        return facturaApplicationPort.findById(id).orElse(null);
     }
 
     @Override
     public Factura saveFacturas(Factura factura) {
-        return facturaPort.save(factura);
+        return facturaApplicationPort.save(factura);
     }
 
     @Override
-    public void deleteFacturasById(Long id) {
-        facturaPort.deleteById(id);;
+    public void deleteFacturaById(Long id) {
+
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Producto> findProductosByNombre(String term) {
-        return productosPort.findByNombreContainingIgnoreCase(term);
+    public List<Producto> findProductoByNombre(String term) {
+        return null;
     }
 
 

@@ -27,8 +27,8 @@ public interface ClientApplicationPort {
 
     Factura saveFacturas(Factura factura);
 
-    void deleteFacturasById(Long id);
+    void deleteFacturaById(Long id);
 
-    List<Producto> findProductosByNombre(String term);
+    List<Producto> findProductoByNombre(String term);
 
 }

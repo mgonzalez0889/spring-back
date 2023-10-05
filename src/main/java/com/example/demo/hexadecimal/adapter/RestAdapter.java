@@ -1,9 +1,12 @@
 package com.example.demo.hexadecimal.adapter;
 
 import com.example.demo.hexadecimal.domain.Cliente;
+import com.example.demo.hexadecimal.domain.Factura;
+import com.example.demo.hexadecimal.domain.Producto;
 import com.example.demo.hexadecimal.port.ClientApplicationPort;
 
 import com.example.demo.hexadecimal.port.UploadRepositoryPort;
+import com.example.demo.models.entity.Productos;
 import org.slf4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -30,8 +33,6 @@ public class RestAdapter {
 
     @Autowired
     private ClientApplicationPort clientApplicationPort;
-
-
 
     private final Logger log = org.slf4j.LoggerFactory.getLogger(RestAdapter.class);
 
@@ -135,10 +136,32 @@ public class RestAdapter {
             try {
                 //nombreArchivo = uploadRepositoryPort.copiar(archivo);
 
+            }catch () {
+
             }
 
         }
 
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @GetMapping("/facturas/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public Factura show(@PathVariable Long id) {
+        return clientApplicationPort.findFacturaById(id);
+    }
+
+    @Secured({"ROLE_ADMIN"})
+    @DeleteMapping("/facturas/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void delete((@PathVariable Long id) {
+        clientApplicationPort.deleteFacturaById(id);
+    }
+
+    @Secured({"ROLE_ADMIN"})
+    @GetMapping("/facturas/filtrar-productos/{term}")
+    public List<Producto> filtrarProductos(@PathVariable String term) {
+        return clientApplicationPort.findProductoByNombre(term);
     }
 
 
