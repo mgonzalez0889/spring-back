@@ -1,10 +1,11 @@
-package com.example.hexadecimal.domain;
+package com.example.demo.hexadecimal.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+
 @Entity
 @Table(name="regiones")
-public class Region implements Serializable {
+public class Regions implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

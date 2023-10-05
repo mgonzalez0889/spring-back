@@ -15,7 +15,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.controllers.ClienteRestController;
+//import com.example.demo.controllers.ClienteRestController;
 
 @Service
 public class UploadFileServiceImpl implements IUploadFileService {

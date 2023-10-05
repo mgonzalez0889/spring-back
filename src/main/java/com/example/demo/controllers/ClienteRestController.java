@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+//package com.example.demo.controllers;
 
 import java.io.File;
 
@@ -48,7 +48,7 @@ import com.example.demo.models.dao.models.services.IClienteService;
 import com.example.demo.models.dao.models.services.IUploadFileService;
 import com.example.demo.models.entity.Cliente;
 import com.example.demo.models.entity.Region;
-
+/*
 
 @CrossOrigin(origins = {"http://localhost:4200", "*"})
 @RestController
@@ -276,3 +276,4 @@ public class ClienteRestController {
 	
 
 }
+*/

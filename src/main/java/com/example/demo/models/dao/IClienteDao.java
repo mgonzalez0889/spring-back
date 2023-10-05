@@ -10,7 +10,7 @@ import com.example.demo.models.entity.Region;
 
 public interface IClienteDao  extends JpaRepository<Cliente, Long>{
 	
-	@Query("from Region")
+	@Query("from Regions")
 	public List<Region> findAllRegiones();
 
 }

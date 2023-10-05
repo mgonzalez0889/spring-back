@@ -1,7 +1,6 @@
-package com.example.hexadecimal.domain;
+package com.example.demo.hexadecimal.domain;
 
 
-import com.example.demo.models.entity.Factura;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name="clientes")
-public class Cliente implements Serializable {
+public class Clientes implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,8 +43,8 @@ public class Cliente implements Serializable {
     @NotNull(message="la region no puede ser vacia")
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="region_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private com.example.hexadecimal.domain.Region region;
+    @JsonIgnoreProperties(value= {"hibernateLazyInitializer", "handler"}, allowSetters = true)
+    private Regions regions;
     //@PrePersist
 	/*public void prePersist() {
 		createAt = new Date();
@@ -53,18 +52,18 @@ public class Cliente implements Serializable {
 	*/
     @JsonIgnoreProperties(value={"cliente", "hibernateLazyInitializer", "handler"}, allowSetters = true)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<Factura> facturas;
+    private List<Facturas> facturas;
 
 
-    public Cliente() {
+    public Clientes() {
         this.facturas = new ArrayList<>();
     }
 
-    public List<Factura> getFacturas() {
+    public List<Facturas> getFacturas() {
         return facturas;
     }
 
-    public void setFacturas(List<Factura> facturas) {
+    public void setFacturas(List<Facturas> facturas) {
         this.facturas = facturas;
     }
 
@@ -108,7 +107,6 @@ public class Cliente implements Serializable {
         this.createAt = createAt;
     }
 
-
     public String getFoto() {
         return foto;
     }
@@ -117,18 +115,13 @@ public class Cliente implements Serializable {
         this.foto = foto;
     }
 
-
-    public Region getRegion() {
-        return region;
+    public Regions getRegion() {
+        return regions;
     }
 
-    public void setRegion(Region region) {
-        this.region = region;
+    public void setRegion(Regions regions) {
+        this.regions = regions;
     }
-
-
-
-
 
 
     /**
