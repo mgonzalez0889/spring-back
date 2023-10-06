@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface RegionRepositoryPort extends JpaRepository<Cliente, Long> {
 
-    @Query("from Regiones")
+    @Query("from Region")
     List<Region> findAllRegiones();
 }

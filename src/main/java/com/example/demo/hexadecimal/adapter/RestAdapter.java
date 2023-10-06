@@ -3,15 +3,17 @@ package com.example.demo.hexadecimal.adapter;
 import com.example.demo.hexadecimal.domain.Cliente;
 import com.example.demo.hexadecimal.domain.Factura;
 import com.example.demo.hexadecimal.domain.Producto;
+import com.example.demo.hexadecimal.domain.Region;
 import com.example.demo.hexadecimal.port.ClientApplicationPort;
 
-import com.example.demo.hexadecimal.port.UploadRepositoryPort;
-import com.example.demo.models.entity.Productos;
+
 import org.slf4j.Logger;
+import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +42,7 @@ public class RestAdapter {
 
     //@RequestMapping(value = "/clients", method = RequestMethod.GET)
     //@ApiResponses({ @ApiResponse(code = 200, message = "Success", response = Cliente.class) })
-    @GetMapping("/clients")
+    @GetMapping("/clientes")
     public List<Cliente> indexAll() {
         return clientApplicationPort.findAll();
     }
@@ -134,14 +138,53 @@ public class RestAdapter {
         if(!archivo.isEmpty()) {
             String nombreArchivo = null;
             try {
-                //nombreArchivo = uploadRepositoryPort.copiar(archivo);
+                nombreArchivo = clientApplicationPort.copiar(archivo);
 
-            }catch () {
+            }catch (IOException e) {
+                response.put("mensaje", "Error al subir la imagen");
+                response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 
             }
+            String nombreFotoAnterior = cliente.getFoto();
+
+            clientApplicationPort.eliminar(nombreFotoAnterior);
+
+            cliente.setFoto(nombreArchivo);
+
+            clientApplicationPort.save(cliente);
+
+            response.put("cliente", cliente);
+            response.put("mensaje", "Ha subido correctamente la imagen: " + nombreArchivo);
 
         }
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 
+    }
+
+    @GetMapping("/uploads/img/{nombreFoto:.+}")
+    public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
+        Resource recurso = null;
+
+        try {
+            recurso = clientApplicationPort.cargar(nombreFoto);
+
+        }catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        HttpHeaders cabecera = new HttpHeaders();
+        cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
+
+
+        return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
+
+    }
+
+    @Secured({"ROLE_ADMIN"})
+    @GetMapping("/clientes/regiones")
+    public List<Region> listarRegiones() {
+        return clientApplicationPort.findAllRegiones();
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
@@ -154,7 +197,7 @@ public class RestAdapter {
     @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/facturas/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete((@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         clientApplicationPort.deleteFacturaById(id);
     }
 
